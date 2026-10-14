@@ -1,0 +1,12 @@
+cff-version: 1.2.0
+message: "If you use this software or dataset, please cite the accompanying paper."
+title: "Absorbing-Boundary Bank Insolvency HJB and Operational Dashboard"
+type: software
+authors:
+  - family-names: Karimi
+    given-names: Nader
+  - family-names: Ahmadian
+    given-names: Davood
+version: 4.0.0
+license: "NOASSERTION"
+repository-code: "https://github.com/Nader-karimi/insolvency-model"
