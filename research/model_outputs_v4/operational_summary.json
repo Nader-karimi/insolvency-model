@@ -1,0 +1,223 @@
+{
+  "model": "finite-horizon three-state survival HJB with absorbing minimum-equity boundary",
+  "state_definition": {
+    "w": "equity/minimum required equity",
+    "lambda": "30-day NCOF/HQLA (inverse LCR)",
+    "d": "NPL/gross loans"
+  },
+  "grid_shape": [
+    25,
+    29,
+    23
+  ],
+  "grid_points": 16675,
+  "controls": 17,
+  "parameters": {
+    "horizon_years": 1.0,
+    "time_steps": 30,
+    "mu_liquidity": 0.03,
+    "sigma_liquidity": 0.3,
+    "mu_credit": 0.02,
+    "sigma_credit": 0.25,
+    "liquidity_credit_correlation": 0.35,
+    "fire_sale_credit_feedback": 0.1,
+    "asset_return": 0.04,
+    "liquidity_cost": 0.08,
+    "credit_loss_severity": 0.65,
+    "borrowing_cost": 0.08,
+    "sale_discount": 0.04,
+    "market_illiquidity": 0.2,
+    "wealth_volatility": 0.22,
+    "sale_liquidity_yield": 0.8,
+    "stable_funding_buffer": 0.1,
+    "borrowing_nsfr_weight": 1.0,
+    "sale_nsfr_relief": 0.7,
+    "max_borrowing": 0.7,
+    "max_asset_sale": 1.0,
+    "warning_pd": 0.2,
+    "insolvency_region_pd": 0.5
+  },
+  "numerical_diagnostics": {
+    "probability_min": 4.507522644026096e-08,
+    "probability_max": 1.0,
+    "wealth_monotonicity_share": 1.0,
+    "liquidity_monotonicity_share": 1.0,
+    "credit_monotonicity_share": 1.0,
+    "feasible_state_share": 0.8275862068965517,
+    "probability_bounds_pass": true
+  },
+  "surrogate": {
+    "feature_count": 20,
+    "train_n": 13340,
+    "test_n": 3335,
+    "test_rmse": 0.025583665779414524,
+    "test_mae": 0.01853413175214586,
+    "test_max_absolute_error": 0.09957221502999603,
+    "test_r_squared": 0.9959239419373035,
+    "test_boundary_auc": 0.9998216559747491,
+    "test_boundary_accuracy": 0.9874062968515742,
+    "test_false_negative_rate": 0.0014903129657228018,
+    "optimizer_success": true,
+    "coefficients": [
+      2.417348023566667,
+      -14.237414058017755,
+      -0.08439960797195478,
+      0.2382724898754194,
+      11.737548149935375,
+      1.661247990839783,
+      0.13381047513379338,
+      2.7173464299502115,
+      -0.17661073188931842,
+      -0.04127624288764815,
+      -3.636674929993735,
+      1.7356372276055598,
+      0.019924696455602173,
+      -0.29977382523647617,
+      0.04530145442038577,
+      1.1914165785445523,
+      -0.04106546362636956,
+      -0.10485402119951157,
+      -0.038336528419244224,
+      -0.11772935364242992
+    ]
+  },
+  "baseline_assessment": {
+    "bank_name": "Illustrative bank - baseline",
+    "model_horizon_years": 1.0,
+    "states": {
+      "wealth_ratio": 1.3333333333333333,
+      "liquidity_state": 0.9583333333333334,
+      "credit_state": 0.1
+    },
+    "regulatory_metrics": {
+      "lcr": 1.0434782608695652,
+      "nsfr": 1.1,
+      "equity_to_minimum": 1.3333333333333333
+    },
+    "default_probability": 0.3702438930995984,
+    "survival_probability": 0.6297561069004016,
+    "region": "warning",
+    "region_label": "Warning/regulatory remediation region",
+    "regulatory_breach": false,
+    "breaches": {
+      "equity": false,
+      "lcr": false,
+      "nsfr": false,
+      "control_infeasible": false
+    },
+    "optimal_policy": {
+      "asset_sale_ratio_to_hqla": 0.0,
+      "borrowing_ratio_to_hqla": 0.003631060670884754,
+      "asset_sale_amount": 0.0,
+      "borrowing_amount": 435.72728050617053
+    },
+    "minimum_regulatory_actions": {
+      "immediate_hqla_gap": 0.0,
+      "stable_funding_increase": 0.0,
+      "minimum_feasible_asset_sale": 0.0,
+      "minimum_feasible_borrowing": 0.0
+    },
+    "exit_actions_to_target_pd": {
+      "target_pd": 0.2,
+      "capital_only": {
+        "target_wealth_ratio": 1.500697350069735,
+        "capital_injection": 10041.841004184098
+      },
+      "liquidity_only": {
+        "target_liquidity_state": null,
+        "hqla_increase": null,
+        "net_cash_outflow_reduction": null
+      },
+      "credit_only": {
+        "target_credit_state": null,
+        "npl_reduction": null
+      },
+      "combined_minimum_effort": {
+        "target_default_probability": 0.1588415482850817,
+        "target_wealth_ratio": 1.5476190476190474,
+        "target_liquidity_state": 0.9583333333333334,
+        "target_credit_state": 0.1,
+        "capital_injection": 12857.14285714284,
+        "hqla_increase": 0.0,
+        "npl_reduction": 0.0,
+        "normalized_effort_score": 0.1607142857142855
+      }
+    },
+    "domain_flags": {
+      "wealth_clipped": false,
+      "liquidity_clipped": false,
+      "credit_clipped": false
+    },
+    "interpretation_warning": "Model-implied screening result; not a legal insolvency declaration, supervisory rating, or investment recommendation. Re-estimate parameters and independently validate before high-stakes use."
+  },
+  "adverse_assessment": {
+    "bank_name": "Illustrative bank - adverse",
+    "model_horizon_years": 1.0,
+    "states": {
+      "wealth_ratio": 1.1,
+      "liquidity_state": 1.684782608695652,
+      "credit_state": 0.18
+    },
+    "regulatory_metrics": {
+      "lcr": 0.5935483870967742,
+      "nsfr": 0.9411764705882353,
+      "equity_to_minimum": 1.1
+    },
+    "default_probability": 0.9151764884654465,
+    "survival_probability": 0.08482351153455348,
+    "region": "insolvency_region",
+    "region_label": "Model-implied insolvency region",
+    "regulatory_breach": true,
+    "breaches": {
+      "equity": false,
+      "lcr": true,
+      "nsfr": true,
+      "control_infeasible": false
+    },
+    "optimal_policy": {
+      "asset_sale_ratio_to_hqla": 0.4095278968657728,
+      "borrowing_ratio_to_hqla": 0.3571602912030339,
+      "asset_sale_amount": 37676.56651165109,
+      "borrowing_amount": 32858.74679067912
+    },
+    "minimum_regulatory_actions": {
+      "immediate_hqla_gap": 63000,
+      "stable_funding_increase": 40000,
+      "minimum_feasible_asset_sale": 35866.666666666664,
+      "minimum_feasible_borrowing": 34306.666666666664
+    },
+    "exit_actions_to_target_pd": {
+      "target_pd": 0.2,
+      "capital_only": {
+        "target_wealth_ratio": null,
+        "capital_injection": null
+      },
+      "liquidity_only": {
+        "target_liquidity_state": null,
+        "hqla_increase": null,
+        "net_cash_outflow_reduction": null
+      },
+      "credit_only": {
+        "target_credit_state": null,
+        "npl_reduction": null
+      },
+      "combined_minimum_effort": {
+        "target_default_probability": 0.18122612472284727,
+        "target_wealth_ratio": 1.7428571428571429,
+        "target_liquidity_state": 1.3635869565217391,
+        "target_credit_state": 0.18,
+        "capital_injection": 38571.42857142858,
+        "hqla_increase": 21670.785173375843,
+        "npl_reduction": 0.0,
+        "normalized_effort_score": 0.8199675971696697
+      }
+    },
+    "domain_flags": {
+      "wealth_clipped": false,
+      "liquidity_clipped": false,
+      "credit_clipped": false
+    },
+    "interpretation_warning": "Model-implied screening result; not a legal insolvency declaration, supervisory rating, or investment recommendation. Re-estimate parameters and independently validate before high-stakes use."
+  },
+  "interpretation_warning": "Research model output, not a legal insolvency declaration or supervisory rating."
+}

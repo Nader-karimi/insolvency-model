@@ -1,0 +1,3 @@
+total_assets,equity,minimum_required_equity,hqla,net_cash_outflow_30d,available_stable_funding,required_stable_funding,gross_loans,nonperforming_loans,max_additional_borrowing,max_sellable_assets,name
+1000000,80000,60000,120000,115000,748000,680000,600000,60000,84000,120000,Illustrative bank - baseline
+920000,66000,60000,92000,155000,640000,680000,600000,108000,64000,92000,Illustrative bank - adverse

@@ -1,0 +1,67 @@
+{
+  "figures": [
+    "Figure 6: controlled drift and path",
+    "Figure 7: physical/state mapping"
+  ],
+  "hjb_parameters": {
+    "horizon_years": 1.0,
+    "time_steps": 30,
+    "mu_liquidity": 0.03,
+    "sigma_liquidity": 0.3,
+    "mu_credit": 0.02,
+    "sigma_credit": 0.25,
+    "liquidity_credit_correlation": 0.35,
+    "fire_sale_credit_feedback": 0.1,
+    "asset_return": 0.04,
+    "liquidity_cost": 0.08,
+    "credit_loss_severity": 0.65,
+    "borrowing_cost": 0.08,
+    "sale_discount": 0.04,
+    "market_illiquidity": 0.2,
+    "wealth_volatility": 0.22,
+    "sale_liquidity_yield": 0.8,
+    "stable_funding_buffer": 0.1,
+    "borrowing_nsfr_weight": 1.0,
+    "sale_nsfr_relief": 0.7,
+    "max_borrowing": 0.7,
+    "max_asset_sale": 1.0,
+    "warning_pd": 0.2,
+    "insolvency_region_pd": 0.5
+  },
+  "initial_state": {
+    "w0": 1.8,
+    "lambda0": 0.82,
+    "d0": 0.055
+  },
+  "path_definition": {
+    "kind": "deterministic monthly drift steps with control lookups from saved HJB solution (no sampled Brownian draws)",
+    "dt_years": 0.08333333333333333,
+    "exogenous_shock_before_month_4": {
+      "lambda_multiplier": 1.45,
+      "d_absolute_increment": 0.012
+    },
+    "exogenous_shock_before_month_8": {
+      "lambda_multiplier": 1.1,
+      "d_absolute_increment": 0.065
+    },
+    "remediated_path_before_month_9": {
+      "w_absolute_increment": 0.38,
+      "lambda_multiplier": 0.78,
+      "d_multiplier": 0.82
+    }
+  },
+  "physical_conversion": {
+    "minimum_equity_million_rials": 60000,
+    "fixed_30_day_NCOF_million_rials": 115000,
+    "implied_initial_equity_million_rials": 108000,
+    "implied_initial_HQLA_million_rials": 140243.9024390244
+  },
+  "figure7_background_slice_fixed_w": 1.45,
+  "sources": [
+    "model_outputs_v4/operational_survival_solution.npz",
+    "model_outputs_v4/stress_trajectory.csv",
+    "reproduce_figure6.py",
+    "reproduce_figure7.py"
+  ],
+  "caveat": "This is a different illustrative scenario from the separate public Streamlit dashboard, whose proxy boundary is not the solved HJB model."
+}

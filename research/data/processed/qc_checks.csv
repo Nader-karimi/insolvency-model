@@ -1,0 +1,289 @@
+﻿symbol,jalali_year,check,pass,detail
+وبصادر,1397,required_fields,True,6/6
+وبصادر,1397,positive_assets,True,2518100676.0
+وبصادر,1397,positive_customer_funding,True,1699046674.0
+وبصادر,1397,balance_equation_1pct,True,0.000000
+وبصادر,1397,separate_scope_metadata,True,True
+وبصادر,1397,nonconsolidated_heading,True,ترازنامه
+وبصادر,1398,required_fields,True,6/6
+وبصادر,1398,positive_assets,True,3241357649.0
+وبصادر,1398,positive_customer_funding,True,2317159326.0
+وبصادر,1398,balance_equation_1pct,True,0.000000
+وبصادر,1398,separate_scope_metadata,True,True
+وبصادر,1398,nonconsolidated_heading,True,ترازنامه
+وبصادر,1399,required_fields,True,6/6
+وبصادر,1399,positive_assets,True,5199685331.0
+وبصادر,1399,positive_customer_funding,True,3616855388.0
+وبصادر,1399,balance_equation_1pct,True,0.000000
+وبصادر,1399,separate_scope_metadata,True,True
+وبصادر,1399,nonconsolidated_heading,True,صورت وضعیت مالی
+وبصادر,1400,required_fields,True,6/6
+وبصادر,1400,positive_assets,True,6103326742.0
+وبصادر,1400,positive_customer_funding,True,4314398010.0
+وبصادر,1400,balance_equation_1pct,True,0.000000
+وبصادر,1400,separate_scope_metadata,True,True
+وبصادر,1400,nonconsolidated_heading,True,صورت وضعیت مالی
+وبصادر,1401,required_fields,True,6/6
+وبصادر,1401,positive_assets,True,7516375829.0
+وبصادر,1401,positive_customer_funding,True,5413113745.0
+وبصادر,1401,balance_equation_1pct,True,0.000000
+وبصادر,1401,separate_scope_metadata,True,True
+وبصادر,1401,nonconsolidated_heading,True,صورت وضعیت مالی
+وبصادر,1402,required_fields,True,6/6
+وبصادر,1402,positive_assets,True,11597362966.0
+وبصادر,1402,positive_customer_funding,True,7073511123.0
+وبصادر,1402,balance_equation_1pct,True,0.000000
+وبصادر,1402,separate_scope_metadata,True,True
+وبصادر,1402,nonconsolidated_heading,True,صورت وضعیت مالی
+وبصادر,1403,required_fields,True,6/6
+وبصادر,1403,positive_assets,True,16402264242.0
+وبصادر,1403,positive_customer_funding,True,9735530666.0
+وبصادر,1403,balance_equation_1pct,True,0.000000
+وبصادر,1403,separate_scope_metadata,True,True
+وبصادر,1403,nonconsolidated_heading,True,صورت وضعیت مالی
+وبصادر,1404,required_fields,True,6/6
+وبصادر,1404,positive_assets,True,27178511173.0
+وبصادر,1404,positive_customer_funding,True,16181618004.0
+وبصادر,1404,balance_equation_1pct,True,0.000000
+وبصادر,1404,separate_scope_metadata,True,True
+وبصادر,1404,nonconsolidated_heading,True,صورت وضعیت مالی
+وبملت,1397,required_fields,True,6/6
+وبملت,1397,positive_assets,True,3405338245.0
+وبملت,1397,positive_customer_funding,True,2141074251.0
+وبملت,1397,balance_equation_1pct,True,0.000000
+وبملت,1397,separate_scope_metadata,True,True
+وبملت,1397,nonconsolidated_heading,True,ترازنامه
+وبملت,1398,required_fields,True,6/6
+وبملت,1398,positive_assets,True,4423619358.0
+وبملت,1398,positive_customer_funding,True,2681520640.0
+وبملت,1398,balance_equation_1pct,True,0.000000
+وبملت,1398,separate_scope_metadata,True,True
+وبملت,1398,nonconsolidated_heading,True,ترازنامه
+وبملت,1399,required_fields,True,6/6
+وبملت,1399,positive_assets,True,7560794972.0
+وبملت,1399,positive_customer_funding,True,4375428265.0
+وبملت,1399,balance_equation_1pct,True,0.000000
+وبملت,1399,separate_scope_metadata,True,True
+وبملت,1399,nonconsolidated_heading,True,صورت وضعیت مالی
+وبملت,1400,required_fields,True,6/6
+وبملت,1400,positive_assets,True,10030074905.0
+وبملت,1400,positive_customer_funding,True,6291999699.0
+وبملت,1400,balance_equation_1pct,True,0.000000
+وبملت,1400,separate_scope_metadata,True,True
+وبملت,1400,nonconsolidated_heading,True,صورت وضعیت مالی
+وبملت,1401,required_fields,True,6/6
+وبملت,1401,positive_assets,True,13947026565.0
+وبملت,1401,positive_customer_funding,True,9153412389.0
+وبملت,1401,balance_equation_1pct,True,0.000000
+وبملت,1401,separate_scope_metadata,True,True
+وبملت,1401,nonconsolidated_heading,True,صورت وضعیت مالی
+وبملت,1402,required_fields,True,6/6
+وبملت,1402,positive_assets,True,16726389809.0
+وبملت,1402,positive_customer_funding,True,9058546170.0
+وبملت,1402,balance_equation_1pct,True,0.000000
+وبملت,1402,separate_scope_metadata,True,True
+وبملت,1402,nonconsolidated_heading,True,صورت وضعیت مالی
+وبملت,1403,required_fields,True,6/6
+وبملت,1403,positive_assets,True,27758668121.0
+وبملت,1403,positive_customer_funding,True,12557265924.0
+وبملت,1403,balance_equation_1pct,True,0.000000
+وبملت,1403,separate_scope_metadata,True,True
+وبملت,1403,nonconsolidated_heading,True,صورت وضعیت مالی
+وبملت,1404,required_fields,True,6/6
+وبملت,1404,positive_assets,True,47947640334.0
+وبملت,1404,positive_customer_funding,True,22270416289.0
+وبملت,1404,balance_equation_1pct,True,0.000000
+وبملت,1404,separate_scope_metadata,True,True
+وبملت,1404,nonconsolidated_heading,True,صورت وضعیت مالی
+وتجارت,1397,required_fields,True,6/6
+وتجارت,1397,positive_assets,True,1942874099.0
+وتجارت,1397,positive_customer_funding,True,1420282565.0
+وتجارت,1397,balance_equation_1pct,True,0.000000
+وتجارت,1397,separate_scope_metadata,True,True
+وتجارت,1397,nonconsolidated_heading,True,ترازنامه
+وتجارت,1398,required_fields,True,6/6
+وتجارت,1398,positive_assets,True,2482029574.0
+وتجارت,1398,positive_customer_funding,True,1982304614.0
+وتجارت,1398,balance_equation_1pct,True,0.000000
+وتجارت,1398,separate_scope_metadata,True,True
+وتجارت,1398,nonconsolidated_heading,True,ترازنامه
+وتجارت,1399,required_fields,True,6/6
+وتجارت,1399,positive_assets,True,3894476477.0
+وتجارت,1399,positive_customer_funding,True,3108017484.0
+وتجارت,1399,balance_equation_1pct,True,0.000000
+وتجارت,1399,separate_scope_metadata,True,True
+وتجارت,1399,nonconsolidated_heading,True,صورت وضعیت مالی
+وتجارت,1400,required_fields,True,6/6
+وتجارت,1400,positive_assets,True,5453603670.0
+وتجارت,1400,positive_customer_funding,True,4406583781.0
+وتجارت,1400,balance_equation_1pct,True,0.000000
+وتجارت,1400,separate_scope_metadata,True,True
+وتجارت,1400,nonconsolidated_heading,True,صورت وضعیت مالی
+وتجارت,1401,required_fields,True,6/6
+وتجارت,1401,positive_assets,True,7595815903.0
+وتجارت,1401,positive_customer_funding,True,6189709578.0
+وتجارت,1401,balance_equation_1pct,True,0.000000
+وتجارت,1401,separate_scope_metadata,True,True
+وتجارت,1401,nonconsolidated_heading,True,صورت وضعیت مالی
+وتجارت,1402,required_fields,True,6/6
+وتجارت,1402,positive_assets,True,10715765403.0
+وتجارت,1402,positive_customer_funding,True,7526717850.0
+وتجارت,1402,balance_equation_1pct,True,0.000000
+وتجارت,1402,separate_scope_metadata,True,True
+وتجارت,1402,nonconsolidated_heading,True,صورت وضعیت مالی
+وتجارت,1403,required_fields,True,6/6
+وتجارت,1403,positive_assets,True,13716234254.0
+وتجارت,1403,positive_customer_funding,True,9126970609.0
+وتجارت,1403,balance_equation_1pct,True,0.000000
+وتجارت,1403,separate_scope_metadata,True,True
+وتجارت,1403,nonconsolidated_heading,True,صورت وضعیت مالی
+وتجارت,1404,required_fields,True,6/6
+وتجارت,1404,positive_assets,True,21001998806.0
+وتجارت,1404,positive_customer_funding,True,15010271129.0
+وتجارت,1404,balance_equation_1pct,True,0.000000
+وتجارت,1404,separate_scope_metadata,True,True
+وتجارت,1404,nonconsolidated_heading,True,صورت وضعیت مالی
+ونوین,1397,required_fields,True,6/6
+ونوین,1397,positive_assets,True,461751768.0
+ونوین,1397,positive_customer_funding,True,350217463.0
+ونوین,1397,balance_equation_1pct,True,0.000000
+ونوین,1397,separate_scope_metadata,True,True
+ونوین,1397,nonconsolidated_heading,True,ترازنامه
+ونوین,1398,required_fields,True,6/6
+ونوین,1398,positive_assets,True,651365404.0
+ونوین,1398,positive_customer_funding,True,511081776.0
+ونوین,1398,balance_equation_1pct,True,0.000000
+ونوین,1398,separate_scope_metadata,True,True
+ونوین,1398,nonconsolidated_heading,True,بابت صورت وضعیت مالی به تاریخ ) 01/01/1397با توجه به وجود تعدیلات سنواتی و تجدید ارائه صورت های مالی( ارائه نگردیده است .ضمن اینکه با توجه به انجام تجدید
+ونوین,1399,required_fields,True,6/6
+ونوین,1399,positive_assets,True,1450352881.0
+ونوین,1399,positive_customer_funding,True,1270207054.0
+ونوین,1399,balance_equation_1pct,True,0.000000
+ونوین,1399,separate_scope_metadata,True,True
+ونوین,1399,nonconsolidated_heading,True,صورت وضعیت مالی
+ونوین,1400,required_fields,True,6/6
+ونوین,1400,positive_assets,True,1884578981.0
+ونوین,1400,positive_customer_funding,True,1659814859.0
+ونوین,1400,balance_equation_1pct,True,0.000000
+ونوین,1400,separate_scope_metadata,True,True
+ونوین,1400,nonconsolidated_heading,True,صورت وضعیت مالی
+ونوین,1401,required_fields,True,6/6
+ونوین,1401,positive_assets,True,2100668324.0
+ونوین,1401,positive_customer_funding,True,1775876983.0
+ونوین,1401,balance_equation_1pct,True,0.000000
+ونوین,1401,separate_scope_metadata,True,True
+ونوین,1401,nonconsolidated_heading,True,صورت وضعیت مالی
+ونوین,1402,required_fields,True,6/6
+ونوین,1402,positive_assets,True,2916677591.0
+ونوین,1402,positive_customer_funding,True,2298449865.0
+ونوین,1402,balance_equation_1pct,True,0.000000
+ونوین,1402,separate_scope_metadata,True,True
+ونوین,1402,nonconsolidated_heading,True,صورت وضعیت مالی
+ونوین,1403,required_fields,True,6/6
+ونوین,1403,positive_assets,True,3412997962.0
+ونوین,1403,positive_customer_funding,True,2631198643.0
+ونوین,1403,balance_equation_1pct,True,0.000000
+ونوین,1403,separate_scope_metadata,True,True
+ونوین,1403,nonconsolidated_heading,True,صورت وضعیت مالی
+ونوین,1404,required_fields,True,6/6
+ونوین,1404,positive_assets,True,6249001656.0
+ونوین,1404,positive_customer_funding,True,4615793925.0
+ونوین,1404,balance_equation_1pct,True,0.000000
+ونوین,1404,separate_scope_metadata,True,True
+ونوین,1404,nonconsolidated_heading,True,صورت وضعیت مالی
+وپارس,1397,required_fields,True,6/6
+وپارس,1397,positive_assets,True,1241325496.0
+وپارس,1397,positive_customer_funding,True,950807444.0
+وپارس,1397,balance_equation_1pct,True,0.000000
+وپارس,1397,separate_scope_metadata,True,True
+وپارس,1397,nonconsolidated_heading,True,ترازنامه
+وپارس,1398,required_fields,True,6/6
+وپارس,1398,positive_assets,True,1630341000.0
+وپارس,1398,positive_customer_funding,True,1156839368.0
+وپارس,1398,balance_equation_1pct,True,0.000000
+وپارس,1398,separate_scope_metadata,True,True
+وپارس,1398,nonconsolidated_heading,True,ترازنامه
+وپارس,1399,required_fields,True,6/6
+وپارس,1399,positive_assets,True,2313751543.0
+وپارس,1399,positive_customer_funding,True,1553186552.0
+وپارس,1399,balance_equation_1pct,True,0.000000
+وپارس,1399,separate_scope_metadata,True,True
+وپارس,1399,nonconsolidated_heading,True,صورت وضعیت مالی
+وپارس,1400,required_fields,True,6/6
+وپارس,1400,positive_assets,True,2873442061.0
+وپارس,1400,positive_customer_funding,True,1916782794.0
+وپارس,1400,balance_equation_1pct,True,0.000000
+وپارس,1400,separate_scope_metadata,True,True
+وپارس,1400,nonconsolidated_heading,True,صورت وضعیت مالی
+وپارس,1401,required_fields,True,6/6
+وپارس,1401,positive_assets,True,3759881122.0
+وپارس,1401,positive_customer_funding,True,2446103557.0
+وپارس,1401,balance_equation_1pct,True,0.000000
+وپارس,1401,separate_scope_metadata,True,True
+وپارس,1401,nonconsolidated_heading,True,صورت وضعیت مالی
+وپارس,1402,required_fields,True,6/6
+وپارس,1402,positive_assets,True,4848153184.0
+وپارس,1402,positive_customer_funding,True,3081957372.0
+وپارس,1402,balance_equation_1pct,True,0.000000
+وپارس,1402,separate_scope_metadata,True,True
+وپارس,1402,nonconsolidated_heading,True,صورت وضعیت مالی
+وپارس,1403,required_fields,True,6/6
+وپارس,1403,positive_assets,True,6967232480.0
+وپارس,1403,positive_customer_funding,True,3890443748.0
+وپارس,1403,balance_equation_1pct,True,0.000000
+وپارس,1403,separate_scope_metadata,True,True
+وپارس,1403,nonconsolidated_heading,True,صورت وضعیت مالی
+وپارس,1404,required_fields,True,6/6
+وپارس,1404,positive_assets,True,11752997595.0
+وپارس,1404,positive_customer_funding,True,6006978906.0
+وپارس,1404,balance_equation_1pct,True,0.000000
+وپارس,1404,separate_scope_metadata,True,True
+وپارس,1404,nonconsolidated_heading,True,صورت وضعیت مالی
+وپاسار,1397,required_fields,True,6/6
+وپاسار,1397,positive_assets,True,1183709772.0
+وپاسار,1397,positive_customer_funding,True,874126100.0
+وپاسار,1397,balance_equation_1pct,True,0.000000
+وپاسار,1397,separate_scope_metadata,True,True
+وپاسار,1397,nonconsolidated_heading,True,ترازنامه
+وپاسار,1398,required_fields,True,6/6
+وپاسار,1398,positive_assets,True,1563342187.0
+وپاسار,1398,positive_customer_funding,True,1193486510.0
+وپاسار,1398,balance_equation_1pct,True,0.000000
+وپاسار,1398,separate_scope_metadata,True,True
+وپاسار,1398,nonconsolidated_heading,True,ترازنامه
+وپاسار,1399,required_fields,True,6/6
+وپاسار,1399,positive_assets,True,2486905253.0
+وپاسار,1399,positive_customer_funding,True,1812463376.0
+وپاسار,1399,balance_equation_1pct,True,0.000000
+وپاسار,1399,separate_scope_metadata,True,True
+وپاسار,1399,nonconsolidated_heading,True,صورت وضعیت مالی
+وپاسار,1400,required_fields,True,6/6
+وپاسار,1400,positive_assets,True,3703680461.0
+وپاسار,1400,positive_customer_funding,True,2600690295.0
+وپاسار,1400,balance_equation_1pct,True,0.000000
+وپاسار,1400,separate_scope_metadata,True,True
+وپاسار,1400,nonconsolidated_heading,True,صورت وضعیت مالی
+وپاسار,1401,required_fields,True,6/6
+وپاسار,1401,positive_assets,True,5647031181.0
+وپاسار,1401,positive_customer_funding,True,3552135391.0
+وپاسار,1401,balance_equation_1pct,True,0.000000
+وپاسار,1401,separate_scope_metadata,True,True
+وپاسار,1401,nonconsolidated_heading,True,صورت وضعیت مالی
+وپاسار,1402,required_fields,True,6/6
+وپاسار,1402,positive_assets,True,8808693944.0
+وپاسار,1402,positive_customer_funding,True,5276947526.0
+وپاسار,1402,balance_equation_1pct,True,0.000000
+وپاسار,1402,separate_scope_metadata,True,True
+وپاسار,1402,nonconsolidated_heading,True,صورت وضعیت مالی
+وپاسار,1403,required_fields,True,6/6
+وپاسار,1403,positive_assets,True,12153508561.0
+وپاسار,1403,positive_customer_funding,True,7398469480.0
+وپاسار,1403,balance_equation_1pct,True,0.000000
+وپاسار,1403,separate_scope_metadata,True,True
+وپاسار,1403,nonconsolidated_heading,True,صورت وضعیت مالی
+وپاسار,1404,required_fields,True,6/6
+وپاسار,1404,positive_assets,True,20270125545.0
+وپاسار,1404,positive_customer_funding,True,12479140603.0
+وپاسار,1404,balance_equation_1pct,True,0.000000
+وپاسار,1404,separate_scope_metadata,True,True
+وپاسار,1404,nonconsolidated_heading,True,صورت وضعیت مالی

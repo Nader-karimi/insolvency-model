@@ -1,0 +1,18 @@
+{
+  "source": "https://github.com/Nader-karimi/insolvency-model/blob/main/app.py (retrieved 2026-10-21)",
+  "unit": "million USD",
+  "initial_equity": 8000.0,
+  "hqla": 15000.0,
+  "marketable_assets": 20000.0,
+  "loan_book": 57000.0,
+  "short_term_liabilities": 25000.0,
+  "long_term_liabilities": 67000.0,
+  "stable_cash_inflows": 8000.0,
+  "short_term_cash_outflows": 14000.0,
+  "npl_ratio": 0.05,
+  "nsfr_buffer": 0.05,
+  "asset_value_shock_fraction": -0.25,
+  "feedback_parameter": 5e-05,
+  "fire_sale_haircut": 0.2,
+  "disclaimer": "These defaults generate a separate illustrative Streamlit proxy-boundary visualization, not the numerical 3-state HJB figures."
+}
