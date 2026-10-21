@@ -18,6 +18,7 @@ from scenario_engine import Scenario,stress
 from hjb_dashboard import (in_domain,pd_at,risk_slice,policy_slice,
                            boundary_surface,risk_vs_capital,local_counterfactuals)
 from research.operational_model import (load_solution,minimum_feasible_controls)
+from policy_diagnostics import policy_diagnostic, zero_borrowing_alternative
 
 ROOT=Path(__file__).resolve().parent
 SOLUTION_FILE=ROOT/'research/model_outputs_v4/operational_survival_solution.npz'
@@ -118,7 +119,7 @@ with tab_s:
             text=['Initial','Stressed'],textposition='top center',name='Illustrative path',
             marker=dict(size=10,color=['#198d65','#c73949']),line=dict(color='#2367d8',width=3)))
         f.update_xaxes(range=[x_lo,x_hi]);f.update_yaxes(range=[y_lo,y_hi])
-        st.plotly_chart(fig_theme(f,'Equity and liquid-buffer trajectory','Equity (millions USD)','Liquid buffer (millions USD)'),use_container_width=True)
+        st.plotly_chart(fig_theme(f,'Initial-to-stressed equity and liquid-buffer comparison','Equity (millions USD)','Liquid buffer (millions USD)'),use_container_width=True)
         explanation('The two markers compare initial and stressed accounting positions. Shaded quadrants identify signs of equity and liquid buffers; they are not legal insolvency boundaries or HJB first-passage contours. This is a two-stage stress comparison, not a continuous-time simulated path.')
     with c2:
         f=go.Figure()
@@ -152,6 +153,17 @@ with tab_s:
         if result['lambda_final']>4 or result['d_final']>.4:
             st.warning('The stressed endpoint lies outside the visual axes; the chart does not support an in-range classification.')
 
+    # Optional accounting identity warning: the simplified scenario inputs need not be a complete balance sheet.
+    with st.expander('Input accounting consistency (optional review)', expanded=False):
+        assets_if_exhaustive=H+M+J
+        liabilities_plus_equity=S+LL+E
+        residual=assets_if_exhaustive-liabilities_plus_equity
+        st.write(f'Assuming the three asset fields are disjoint and exhaustive, implied assets = {assets_if_exhaustive:,.0f}; liabilities + equity = {liabilities_plus_equity:,.0f}; difference = {residual:,.0f} million USD.')
+        if abs(residual)>1e-7:
+            st.warning('The input fields do not constitute a reconciled full balance sheet under that assumption. They are intentionally simplified stress-scenario inputs; do not treat this as a verified institutional accounting statement.')
+        else:
+            st.success('The listed items reconcile under the disjoint-and-exhaustive assumption. This is not an independent audit.')
+
     st.subheader('Stress transmission and response')
     f=go.Figure(go.Waterfall(orientation='v',measure=['absolute','relative','relative','total'],
           x=['Starting equity','Asset-value shock','Borrowing and sale costs','Stressed equity'],
@@ -176,6 +188,7 @@ with tab_s:
 with tab_h:
     st.subheader('Finite-horizon numerical HJB — conditional reference calibration')
     st.caption('The arrays below come from research/model_outputs_v4/operational_survival_solution.npz (25×29×23 grid, 30 steps, one-year horizon). These are fixed-calibration surfaces, not bank-specific re-estimates.')
+    st.info('Independent models: the −25% accounting shock on the first tab does NOT feed into the one-year HJB result. The HJB state below uses its own minimum equity, 30-day NCOF, eligible HQLA, and NPL inputs.')
     in_bounds=in_domain(solution,w,lam,d)
     feas=minimum_feasible_controls(lam,calibration)
     c1,c2,c3,c4=st.columns(4)
@@ -202,15 +215,27 @@ with tab_h:
         f.add_trace(go.Contour(x=solution.liquidity_grid,y=solution.credit_grid,z=z,
             contours=dict(start=alpha,end=alpha,size=1e-4,coloring='none'),line=dict(color='#07182F',width=3),
             showscale=False,name=f'{alpha:.0%} model contour'))
-        st.plotly_chart(fig_theme(f,f'HJB PD slice at w={w_slice:.2f}','Inverse LCR λ','NPL ratio d'),use_container_width=True)
+        f=fig_theme(f,f'HJB PD slice at w={w_slice:.2f}','Inverse LCR λ','NPL ratio d')
+        f.update_layout(legend=dict(orientation='h',x=0,y=-.22,bgcolor='rgba(255,255,255,0)'),
+                        height=485,margin=dict(l=35,r=45,t=40,b=95))
+        st.plotly_chart(f,use_container_width=True)
         explanation(f'This chart evaluates the numerical HJB solution at fixed normalized equity w={w_slice:.2f}. The contour marks a {alpha:.0%} model-implied threshold. Redder areas represent higher conditional first-passage probability. A marker outside the solved domain cannot be assigned a numerical probability.')
     with c2:
         boundary=boundary_surface(solution,alpha)
         f=go.Figure(go.Heatmap(x=solution.liquidity_grid,y=solution.credit_grid,z=boundary,
             colorscale='Viridis',colorbar=dict(title='Required w'),hoverongaps=False))
+        # Grey squares distinguish intrinsically infeasible controls from feasible
+        # locations whose risk target is unattainable within the finite wealth grid.
+        infeas=np.array([not minimum_feasible_controls(float(z),calibration)['feasible']
+                         for z in solution.liquidity_grid])
+        if np.any(infeas):
+            zmask=np.where(infeas[None,:],1.0,np.nan) * np.ones_like(boundary)
+            f.add_trace(go.Heatmap(x=solution.liquidity_grid,y=solution.credit_grid,z=zmask,
+                 zmin=0,zmax=1,showscale=False,colorscale=[[0,'#888f9c'],[1,'#888f9c']],
+                 hovertemplate='Control infeasible in reference model<extra></extra>'))
         f.add_trace(go.Scatter(x=[lam],y=[d],mode='markers',marker=dict(symbol='x',size=11,color='white',line=dict(width=2,color='#07182F')),name='Input liquidity/credit'))
         st.plotly_chart(fig_theme(f,f'Capital buffer for {alpha:.0%} model target','Inverse LCR λ','NPL ratio d'),use_container_width=True)
-        explanation('Each colored location is the first discrete capital grid point whose HJB probability is no greater than the selected target. Blank cells mean that threshold is not attainable within the computed capital range; they are not zero-capital requirements.')
+        explanation('Colors show the first discrete capital grid point attaining the selected HJB risk target. Grey cells have no admissible reference-model controls. White/blank cells have feasible controls but do not attain the selected target within the finite computed capital grid; they are NOT zero-capital requirements.')
     with st.expander('Explore the three-dimensional model boundary', expanded=True):
         boundary_3d=boundary_surface(solution,alpha)
         f3=go.Figure(go.Surface(x=solution.liquidity_grid, y=solution.credit_grid,
@@ -219,6 +244,7 @@ with tab_h:
         f3.update_layout(title=f'Model-implied three-dimensional {alpha:.0%} capital boundary',
                          scene=dict(xaxis_title='Inverse LCR λ',yaxis_title='Credit state d',
                                     zaxis_title='Required normalized equity w'),
+                         scene_camera=dict(eye=dict(x=1.50,y=1.48,z=1.25)),
                          template='plotly_white',height=480,margin=dict(l=0,r=0,t=42,b=0))
         st.plotly_chart(f3,use_container_width=True)
         explanation('The height is the smallest grid value of normalized capital that meets the selected conditional model-risk threshold for each liquidity–credit pair. Holes mean the target cannot be met within the solved capital grid. This is a surface of a numerical reference model, not a legal insolvency surface for observed banks.')
@@ -228,8 +254,12 @@ with tab_h:
         f=go.Figure(go.Heatmap(x=solution.liquidity_grid,y=solution.credit_grid,z=pol,
             zmin=-.5,zmax=3.5,colorscale=[[0,'#2fa987'],[.249,'#2fa987'],[.25,'#5a8dee'],[.499,'#5a8dee'],[.5,'#efa95d'],[.749,'#efa95d'],[.75,'#7b8193'],[1,'#7b8193']],
             colorbar=dict(tickvals=[0,1,2,3],ticktext=['No action','Borrow','Sale','Infeasible'])))
+        if in_bounds:
+            f.add_trace(go.Scatter(x=[lam],y=[d],mode='markers',
+                       marker=dict(size=12,color='#101b34',symbol='x'),
+                       name='User input (policy from nearest grid node)'))
         st.plotly_chart(fig_theme(f,f'HJB policy regimes (nearest w grid = {wp:.2f})','Inverse LCR λ','NPL ratio d'),use_container_width=True)
-        explanation('Color indicates the optimizer’s regime in the reference constrained HJB: no additional action, borrowing, positive asset sales, or infeasible controls. Policies depend on fixed assumed sale costs, credit feedback and capacity bounds; they are not individualized financial advice.')
+        explanation('Color indicates the optimizer’s regime in the reference constrained HJB: no additional action, borrowing, positive asset sales, or infeasible controls. Colors are reported at the nearest wealth grid level (no categorical interpolation); the solver optimizes over its discretized sale choices with the minimum feasible borrowing associated with each choice. Policy selections are conditional on assumed parameters, not individualized financial advice.')
     with c2:
         wg,pg=risk_vs_capital(solution,lam,d)
         f=go.Figure(go.Scatter(x=wg,y=pg,mode='lines+markers',line=dict(color='#2367d8',width=3),name='Model PD'))
@@ -258,14 +288,52 @@ with tab_h:
     sale_min=np.array([a['asset_sale'] if a['feasible'] else np.nan for a in min_controls])
     borrow_min=np.array([a['borrowing'] if a['feasible'] else np.nan for a in min_controls])
     f=go.Figure()
-    f.add_trace(go.Scatter(x=lamgrid,y=sale_min,mode='lines+markers',name='Minimum sale / HQLA'))
-    f.add_trace(go.Scatter(x=lamgrid,y=borrow_min,mode='lines+markers',name='Minimum borrowing / HQLA'))
+    f.add_trace(go.Scatter(x=lamgrid,y=sale_min,mode='lines+markers',
+                           name='Smallest feasible sale a (paired with b)'))
+    f.add_trace(go.Scatter(x=lamgrid,y=borrow_min,mode='lines+markers',
+                           name='Borrowing b paired with smallest feasible sale'))
     f.add_vline(x=lam,line_dash='dash',line_color='#444')
-    st.plotly_chart(fig_theme(f,'LCR–NSFR feasible-control envelope','Inverse LCR λ','Minimum control intensity / HQLA'),use_container_width=True)
-    explanation('For each liquidity state the plot uses the algebraic LCR/NSFR feasibility inequalities of the published reference model. Missing segments mean the institutional-capacity bounds make the joint constraints infeasible. This plot is not an official Basel compliance calculation.')
-    if in_bounds and w>1 and feas['feasible']:
-        h_int=f'Feasible: minimum sale intensity {feas["asset_sale"]:.3f}; minimum borrowing intensity {feas["borrowing"]:.3f}.'
-        st.info(h_int + ' Multiply by the supplied eligible HQLA to express these example intensities in the selected monetary units; do not confuse minimum feasible controls with optimal HJB policy.')
+    st.plotly_chart(fig_theme(f,'LCR–NSFR control pair at minimum feasible sale','Inverse LCR λ',
+                                   'Control intensity (fraction of eligible HQLA)'),use_container_width=True)
+    explanation('The blue series is the smallest sale intensity satisfying BOTH simplified constraints and control-capacity limits. The red series is the borrowing paired with that smallest sale, NOT the smallest borrowing possible across all admissible pairs. Larger sales can sometimes allow less borrowing. Gaps mean no pair satisfies the reference constraints. These are mathematical model constraints, not official Basel regulatory computations.')
+    if feas['feasible'] and w>1 and in_bounds:
+        st.info(f'Minimum-sale feasible pair at the EXACT input λ={lam:.3f}: '
+                f'a={feas["asset_sale"]:.4f}, associated b={feas["borrowing"]:.4f}. '
+                f'Using eligible HQLA {lcr_hqla:,.0f}, the mathematical scaling equivalents are '
+                f'{feas["asset_sale"]*lcr_hqla:,.0f} sale units and '
+                f'{feas["borrowing"]*lcr_hqla:,.0f} borrowing units. '
+                'They are not optimized actions or institutionally implementable recommendations.')
+        alternative=zero_borrowing_alternative(lam,calibration)
+        if alternative is not None and alternative['sale']>feas['asset_sale']+1e-8:
+            st.caption(f'Feasible trade-off example: with NO borrowing (b=0), a sale intensity '
+                       f'a={alternative["sale"]:.4f} can instead satisfy both constraints. '
+                       'This illustrates why the red series is not a global minimum-borrowing curve.')
+        policy=policy_diagnostic(solution,w,lam,d)
+        if policy is not None:
+            st.markdown('**Stored reference-grid policy versus an exact-input feasibility adjustment**')
+            wp,lp,dp=policy['grid_state']
+            if policy['grid_policy'] is not None:
+                gp=policy['grid_policy']
+                st.write(f'At the NEAREST HJB grid node (w={wp:.4f}, λ={lp:.4f}, d={dp:.4f}), '
+                         f'the stored reference optimizer selected sale a*={gp["sale"]:.4f} '
+                         f'and associated borrowing b*={gp["borrowing"]:.4f}. '
+                         'These are grid-node controls, not an exact-state optimal action.')
+                candidate=policy['candidate']
+                if candidate is not None:
+                    st.write(f'At YOUR exact input λ={lam:.4f}, a feasible pair that preserves '
+                             f'the grid-selected sale (or raises it to the feasible minimum) is '
+                             f'a={candidate["sale"]:.4f}, b={candidate["borrowing"]:.4f}; '
+                             f'constraint margins: liquidity={candidate["margins"]["liquidity"]:.4g}, '
+                             f'stable funding={candidate["margins"]["stable_funding"]:.4g}. '
+                             'This pair has been feasibility-checked but NOT reoptimized in HJB.')
+                else:
+                    st.warning('The grid-selected sale cannot be safely converted into a feasible exact-input pair under the reference capacity constraints; no suggested action is displayed.')
+            else:
+                st.warning('There is no finite stored policy at the nearest numerical grid state.')
+    elif w<=1 or not feas['feasible']:
+        st.warning('Absorbing or control-infeasible reference state: no locally feasible intervention is reported.')
+    else:
+        st.warning('State is outside the solved HJB grid: no grid-optimal action is reported or extrapolated.')
     st.caption(f'Reference parameters: T={calibration.horizon_years:g} year; σw={calibration.wealth_volatility:.2f}, σλ={calibration.sigma_liquidity:.2f}, σd={calibration.sigma_credit:.2f}, ρ={calibration.liquidity_credit_correlation:.2f}, φ={calibration.fire_sale_credit_feedback:.2f}, s0={calibration.stable_funding_buffer:.2f}, ā={calibration.max_asset_sale:.2f}, b̄={calibration.max_borrowing:.2f}.')
 
 with tab_c:
@@ -273,12 +341,40 @@ with tab_c:
     st.markdown('**Reference risk:** minimum model-admissible one-year probability of hitting normalized equity `w ≤ 1` or a reference control-infeasibility boundary, given the stated mathematical and computational assumptions. The 20% and 50% thresholds are visualization choices, not observed default rates.')
     st.markdown('**Two different representations:** the first tab uses a discrete balance-sheet shock and a legacy heuristic contour. The second tab reads the released numerical **three-state HJB grid**. Streamlit inputs cannot convert annual public CODAL accounting proxies into official LCR, NSFR or regulatory NPL without granular regulatory disclosures.')
     st.markdown('**Numerical limits:** the computation exhibits material time/space resolution sensitivity under some tested refinements. The plotted surface is therefore a conditional numerical approximation, not a certified convergence-accurate default probability or an externally calibrated predictive score.')
+    st.markdown('**Validation status at a glance**')
+    st.dataframe(pd.DataFrame([
+        {'Evidence':'Saved HJB output reproducibility','Status':'Checked against released code'},
+        {'Evidence':'Control/time/domain numerical tests','Status':'Reported; residual resolution sensitivity'},
+        {'Evidence':'Surrogate prediction of numerical HJB output','Status':'Internal approximation only'},
+        {'Evidence':'Institution-specific bank-failure backtest','Status':'Not performed'},
+        {'Evidence':'Official LCR/NSFR/NPL inputs','Status':'Not supplied by accounting proxies'},
+    ]),hide_index=True,use_container_width=True)
+    with st.expander('CODAL accounting-proxy quality check'):
+        audit_file=ROOT/'research/audit/public_panel_completeness.json'
+        if audit_file.exists():
+            audit=json.loads(audit_file.read_text())
+            st.write(f"The processed sample includes {audit['records']} bank-year observations across {audit['distinct_banks']} banks. "
+                     f"Basic statement identities hold in {audit['balance_sheet_identities_within_1e_6']} records; "
+                     f"the stored liquidity accounting proxy reconciles to its component amounts in "
+                     f"{audit['proxy_ratio_cross_field_identities_match']} records and differs in "
+                     f"{audit['proxy_ratio_cross_field_identities_mismatch']}. "
+                     'These checks do not validate legal bank-failure predictions.')
     with st.expander('Solver verification table'):
         path=ROOT/'research/model_outputs_v4/operational_convergence.csv'
-        if path.exists():st.dataframe(pd.read_csv(path),use_container_width=True)
+        if path.exists():st.dataframe(pd.read_csv(path).rename(columns={
+            'run':'Grid experiment','wealth_points':'Capital nodes','liquidity_points':'Liquidity nodes',
+            'credit_points':'Credit nodes','time_steps':'Time steps','state_points':'Total states',
+            'rmse_vs_reference':'RMSE vs finer reference',
+            'max_absolute_error_vs_reference':'Max abs. difference vs reference',
+        }),use_container_width=True,hide_index=True)
+        st.caption('The reference is a finer NUMERICAL solution, not the exact PDE solution. Differences vary with space/time refinement; this table alone does not certify numerical convergence.')
     with st.expander('Independent robustness experiments'):
         path=ROOT/'research/audit/numerical_controls_time.csv'
-        if path.exists():st.dataframe(pd.read_csv(path),use_container_width=True)
+        if path.exists():st.dataframe(pd.read_csv(path).rename(columns={
+            'controls':'Sale choices','time_steps':'Time steps','grid':'Grid nodes','runtime_s':'Runtime (s)',
+            **{f'pd_{i}':f'Model PD test {i+1}' for i in range(5)},
+        }),use_container_width=True,hide_index=True)
+        st.caption('Independent checks alter one setting at a time. The strong time-step sensitivity means the reported probabilities remain numerical approximations, not certified risk forecasts.')
     st.markdown('**Reproducibility:** all manuscript figures, numerical tables, source code, parameter files, processed public accounting proxies, and controlled regression checks are in the `research/` directory. The online dashboard is a presentation layer, not a substitute for this numerical archive.')
     st.download_button('Download current scenario and HJB coordinates (JSON)',
         data=json.dumps({'scenario':asdict(s),'scenario_result':result,

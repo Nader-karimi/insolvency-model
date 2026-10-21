@@ -108,3 +108,28 @@ Before making the repository public, verify reuse rights for extracted CODAL rec
 The optional figure corresponding to the dashboard's original default stress scenario is reproducible with `python research/reproduce_dashboard_default.py`. Its inputs and outputs are in `research/dashboard_default_scenario_results.json`. Unlike HJB risk maps, the right-panel scenario score threshold is illustrative and **not a mathematical HJB insolvency boundary**. The independent HJB solution is preserved in the separately labeled tab.
 
 **CODAL cross-field quality check:** The six-bank panel passes 48/48 basic statement identity checks, but its stored cash/bank-assets-to-deposits ratio disagrees with the recorded amount fields in 14/48 observations. Figure 2 omits those 14 rather than silently treating the proxy as verified. See `research/audit/public_panel_completeness.json` for the affected records.
+
+## Dashboard interpretation update (2026-10-21)
+
+The dashboard has two independent displays. Balance-sheet shock panels are accounting scenarios with a heuristic score, whereas HJB risk maps use the saved three-dimensional numerical solution. **The -25% default accounting shock is not a shock input to the HJB solver.**
+
+The HJB **Local feasibility and illustrative actions** panel now differentiates:
+
+- **Minimum-sale feasible pair** `(a_min, b_associated)` at the exact input liquidity coordinate. `b_associated` is *not* the minimum borrowing across all control combinations; selling more assets can sometimes permit `b=0`.
+- **Nearest-grid stored HJB policy** `(a*, b*)`, reported only at its actual grid coordinates `(w_grid, λ_grid, d_grid)` and subject to numerical approximation and the solver's discretized sale choices.
+- **Exact-input feasible adjustment** retaining (or raising) the grid-selected sale, and recalculating minimum borrowing to satisfy the actual input's liquidity and stable-funding constraints. This pair is **not re-optimized** and must not be presented as a bank-specific recommendation.
+
+For the illustrative high-risk input `E=8000, Emin=7000, NCOF=22500, HQLA=15000, d=0.18`, the algebraic minimum-sale pair is `a=0.2666667, b=0.2866667`, while the stored nearest-node HJB selection is `a*=0.3125, b*=0.2427719` **at λ_grid≈1.4927719**. Recomputing exact-input minimum borrowing while retaining this sale gives `a=0.3125, b=0.25` at `λ=1.5`; both reference constraints pass. A feasible zero-borrowing example exists at `a=0.625, b=0`. These are dimensionless controls normalized by eligible HQLA; scaled monetary equivalents are illustrative only.
+
+The capital threshold map distinguishes **grey model-infeasible** locations from **blank feasible but unattained-target-within-grid** locations. The numerical-validation tab now includes a short data quality summary (48 processed CODAL bank-year records, 34 internally reconcilable proxy ratios, 14 mismatches requiring exclusion/review for the affected accounting-ratio analysis) and a clear distinction between implemented tests and absent bank-failure external validation.
+
+### Updating an existing deployed Streamlit service
+
+If this repo already runs on Render and `research/` is in GitHub, **replace `app.py` and add `policy_diagnostics.py`** at the repository root. No change to Render's Build/Start commands, existing service, or stored NPZ solution is needed. To retain the refreshed project documentation and tests, update `README.md` and `tests/test_policy_diagnostics.py` too. Push to the already-linked `main` branch, then check the fresh deployment in Render Logs and both default/adverse scenarios. Do not upload a ZIP as a single GitHub file.
+
+The local test suite can be run with:
+
+```sh
+python -m pytest -q tests research/tests/test_operational_model.py
+python tests/ui_static_smoke.py
+```
